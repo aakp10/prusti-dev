@@ -1,4 +1,7 @@
+#![feature(optin_builtin_traits)]
+
 extern crate proc_macro;
+pub mod ghost;
 
 #[cfg(not(feature = "prusti"))]
 mod private {
