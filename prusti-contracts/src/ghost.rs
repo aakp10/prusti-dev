@@ -29,7 +29,7 @@ macro_rules! implement_ghost_type_generic {
 
 // Ghost variant of Viper type, Int
 implement_ghost_type!(GhostInt);
-// wrappers around standard operation on GhostInt
+// wrappers around standard operations on GhostInt
 impl Add for GhostInt {
     type Output = Self;
     fn add(self, other: GhostInt) -> Self::Output {
@@ -46,7 +46,7 @@ impl Sub for GhostInt {
 
 // Ghost variant of Viper type, Bool
 implement_ghost_type!(GhostBool);
-// wrappers around standard operation on GhostBool
+// wrappers around standard operations on GhostBool
 impl BitAnd for GhostBool {
     type Output = Self;
     fn bitand(self, rhs: Self) -> Self::Output {
@@ -70,66 +70,66 @@ impl Not for GhostBool {
 
 // Ghost variant of Viper type, Seq[T]
 implement_ghost_type_generic!(GhostSeq);
-// wrappers around standard operation on GhostSeq
+// wrappers around standard operations on GhostSeq
 impl<T: Ghost> GhostSeq<T> {
     /// let seq: GhostSeq<i32> = GhostSeq::new();
-    /// seq.insert(10);
-    pub fn insert(self, to_add: T) -> Self {
+    /// seq.push(10);
+    pub fn pushself, to_add: T) -> Self {
         GhostSeq::new()
     }
 
     /// let seq: GhostSeq<i32> = GhostSeq::new();
-    /// seq.insert(10);
-    /// seq.remove(10);
-    pub fn remove(self, to_remove: T) -> Self {
+    /// seq.push(10);
+    /// seq.pop(10);
+    pub fn pop(self, to_remove: T) -> Self {
         GhostSeq::new()
     }
 
     /// let seq1: GhostSeq<i32> = GhostSeq::new();
     /// seq1.append(seq2);
-    pub fn append(self, other: GhostSeq<T>) -> Self {
+    pub fn chain(self, other: GhostSeq<T>) -> Self {
         GhostSeq::new()
     }
 }
 
 // Ghost variant of Viper type, Set[T]
 implement_ghost_type_generic!(GhostSet);
-// wrappers around standard operation on GhostSet
+// wrappers around standard operations on GhostSet
 impl<T: Ghost> GhostSet<T> {
-    pub fn insert(self, to_add: T) -> Self {
+    pub fn push(self, to_add: T) -> Self {
         GhostSet::new()
     }
 
-    pub fn set_diff(self, to_remove: T) -> Self {
+    pub fn remove(self, to_remove: T) -> Self {
         GhostSet::new()
     }
 
-    pub fn set_union(self, other: GhostSeq<T>) -> Self {
+    pub fn union(self, other: GhostSeq<T>) -> Self {
         GhostSet::new()
     }
 
-    pub fn set_intersection(self, other: GhostSeq<T>) -> Self {
+    pub fn intersection(self, other: GhostSeq<T>) -> Self {
         GhostSet::new()
     }
 }
 
 // Ghost variant of Viper type, MultiSet[T]
 implement_ghost_type_generic!(GhostMultiSet);
-// wrappers around standard operation on GhostMultiSet
+// wrappers around standard operations on GhostMultiSet
 impl<T: Ghost> GhostMultiSet<T> {
-    pub fn insert(self, to_add: T) -> Self {
+    pub fn push(self, to_add: T) -> Self {
         GhostMultiSet::new()
     }
 
-    pub fn set_diff(self, to_remove: T) -> Self {
+    pub fn remove(self, to_remove: T) -> Self {
         GhostMultiSet::new()
     }
 
-    pub fn set_union(self, other: GhostSeq<T>) -> Self {
+    pub fn union(self, other: GhostSeq<T>) -> Self {
         GhostMultiSet::new()
     }
 
-    pub fn set_intersection(self, other: GhostSeq<T>) -> Self {
+    pub fn intersection(self, other: GhostSeq<T>) -> Self {
         GhostMultiSet::new()
     }
 
