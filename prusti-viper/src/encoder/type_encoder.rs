@@ -302,7 +302,20 @@ impl<'p, 'v, 'r: 'v, 'tcx: 'v> TypeEncoder<'p, 'v, 'tcx> {
                                 self.encoder.encode_struct_field(&field_name, field_ty)
                             })
                             .collect();
-                        vec![vir::Predicate::new_struct(typ, fields)]
+                        if adt_def.adt_kind() == ty::AdtKind::Struct
+                            && adt_def.variants[0usize.into()].ident.as_str().eq(&"GhostInt".to_string())
+                            && self.ty.is_zst(self.encoder.env().tcx(), adt_def.did) {
+                                debug!("Ghost Type");
+                                vec![vir::Predicate::new_primitive_value(
+                                    typ,
+                                    self.encoder.encode_value_field(self.ty),
+                                    None,
+                                    false
+                                )]
+                        }
+                        else {
+                            vec![vir::Predicate::new_struct(typ, fields)]
+                        }
                     } else {
                         debug!("ADT {:?} has {} variants", adt_def, num_variants);
                         let discriminant_field = self.encoder.encode_discriminant_field();
@@ -433,7 +446,6 @@ impl<'p, 'v, 'r: 'v, 'tcx: 'v> TypeEncoder<'p, 'v, 'tcx> {
                 composed_name.push("_end_".to_string()); // makes generics "less fragile"
                 composed_name.join("$")
             }
-
             ty::TyKind::Tuple(elems) => {
                 let elem_predicate_names: Result<Vec<String>, ErrorCtxt> = elems
                     .iter()
